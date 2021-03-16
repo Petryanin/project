@@ -1,0 +1,94 @@
+body {
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
+	justify-content: center;
+	align-items: center;
+}
+
+.form {
+	width: 500px;
+	padding: 20px;
+	font-family: sans-serif;
+	letter-spacing: 1px;
+	position: absolute;
+     top: 50%;
+     left: 50%;
+     transform: translate(-50%,-50%);
+}
+
+.form__input,
+.form__button,
+.error_msg {
+	font-family: sans-serif;
+	letter-spacing: 1px;
+	font-size: 16px;
+}
+
+.form__title,
+.signup__success {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 40px;
+	font-weight: normal;
+}
+
+.signup__success {
+	color: #51f542;
+}
+
+a {
+	color: #5691FF;
+	text-decoration: none;
+}
+
+.form__group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.form__label {
+	position: relative;
+	padding-bottom: 15px;
+	color: #9e9e9e;
+}
+
+.form__input {
+	width: 100%;
+	padding-top: 5px;
+	padding-bottom: 10px;
+	border: none;
+	border-bottom: 1px solid #e0e0e0;
+	background-color: transparent;
+	outline: none;
+}
+
+.form__input:focus {
+	border-bottom: 1px solid #1a73a8;
+}
+
+.form__button {
+	align-items: center;
+	padding: 10px 20px;
+	border: 1px solid #5691FF;
+	border-radius: 10px;
+	color: #5691FF;
+	background-color: #FFFFFF;
+	transition: background-color .3s;
+}
+
+.form__button:focus,
+.form__button:hover {
+	background-color: #5691FF;
+	color: #FFFFFF;
+	cursor: pointer;
+	transition: .3s;
+}
+
+.error_msg {
+	
+	color: #f59342;
+	padding: 5px 10px;
+	border: 1px solid #f59342;
+	border-radius: 10px;
+}

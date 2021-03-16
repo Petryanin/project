@@ -1,14 +1,14 @@
 <?php
-	require_once 'lib.inc.php';
-	require_once 'eshop-config.inc.php';
+require_once 'lib.inc.php';
+require_once 'eshop-config.inc.php';
 
-	if ($_SERVER['REQUEST_METHOD'] == 'GET' and !empty($_GET['search'])) {
-		$result = 'search_books';
-		$query = $_GET['search'];
-	} else {
-		$result = 'select_all_items';
-		$query = '';
-	}
+if ($_SERVER['REQUEST_METHOD'] == 'GET' and !empty($_GET['search'])) {
+	$result = 'search_books';
+	$query = $_GET['search'];
+} else {
+	$result = 'select_all_items';
+	$query = '';
+}
 ?>
 
 <form class="input-group" method="GET">
@@ -23,12 +23,12 @@
 
 <p>Товаров в <a href="index.php?id=basket" class="text-decoration-none">корзине</a>: <?= $count ?></p>
 <?php
-	$goods = $result($query);
-	if ($result == 'search_books') :
+$goods = $result($query);
+if ($result == 'search_books') :
 ?>
-		<p>Результатов поиска: <?= count($goods) ?></p>
+	<p>Результатов поиска: <?= count($goods) ?></p>
 <?php
-	endif;
+endif;
 ?>
 
 <table class="table">
@@ -45,22 +45,23 @@
 	</thead>
 
 	<?php
-		foreach ($goods as $item) :
-			if (!$item['image'])
-				$item['image'] = 'Изображение отсутствует';
-			else
-				$item['image'] = "<img style='width: 60%' src='{$item['image']}'>";
+	foreach ($goods as $item) :
+		$image_path = 'eshop/images/' . $item['item_id'] . '.jpg';
+		if (!is_file($image_path))
+			$image = 'Изображение отсутствует';
+		else
+			$image = "<img style='width: 60%' src='{$image_path}'>";
 	?>
-			<tr>
-				<td><?= $item['image'] ?></td>
-				<td valign="middle"><?= $item['title'] ?></td>
-				<td valign="middle"><?= $item['author'] ?></td>
-				<td valign="middle"><?= $item['pubyear'] ?></td>
-				<td valign="middle"><?= $item['price'] ?></td>
-				<th valign="middle"><a class="btn btn-outline-primary p-2" href="inc/add-to-basket.inc.php?id=<?= $item['item_id'] ?>" role="button">В корзину</a></th>
-			</tr>
+		<tr>
+			<td><?= $image ?></td>
+			<td valign="middle"><?= $item['title'] ?></td>
+			<td valign="middle"><?= $item['author'] ?></td>
+			<td valign="middle"><?= $item['pubyear'] ?></td>
+			<td valign="middle"><?= $item['price'] ?></td>
+			<th valign="middle"><a class="btn btn-outline-primary p-2" href="inc/add-to-basket.inc.php?id=<?= $item['item_id'] ?>" role="button">В корзину</a></th>
+		</tr>
 	<?php
-		endforeach;
+	endforeach;
 	?>
-	
+
 </table>

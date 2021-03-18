@@ -2,6 +2,7 @@
 session_start();
 
 require_once 'inc/titles.inc.php';
+
 ?>
 <!doctype html>
 <html lang="en" class="h-100">
@@ -36,6 +37,7 @@ require_once 'inc/titles.inc.php';
 							</a>
 						</li>
 					</ul>
+					<a class="btn btn-outline-light" href="../index.php">Выйти из режима администрирования</a>
 				</div>
 			</div>
 		</nav>

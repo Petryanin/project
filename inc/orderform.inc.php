@@ -1,5 +1,5 @@
 <?php
-require 'lib.inc.php';
+require '../functions.php';
 
 if (isset($_SESSION['error'])) :
 ?>

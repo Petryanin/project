@@ -51,6 +51,33 @@ function output_comments() {
 	return $arr;
 }
 
+function convert_res_to_arr($data) {
+	global $basket;
+	$arr = [];
+
+	while ($row = mysqli_fetch_assoc($data)) {
+		$row['quantity'] = $basket[$row['item_id']];
+		$arr[] = $row;
+	}
+
+	return $arr;
+}
+
+function add_item_to_cat($title, $author, $pubyear, $price, $image) {
+	$sql = "INSERT INTO catalog (title, author, pubyear, price, image)
+				VALUES (?, ?, ?, ?, ?)";
+	global $link;
+
+	if (!$stmt = mysqli_prepare($link, $sql)) {
+		return false;
+	}
+
+	mysqli_stmt_bind_param($stmt, "ssiis", $title, $author, $pubyear, $price, $image);
+	mysqli_stmt_execute($stmt);
+	mysqli_stmt_close($stmt);
+	return true;
+}
+
 function select_all_items() {
 	$sql = 'SELECT * FROM catalog';
 	global $link;
@@ -82,6 +109,103 @@ function search_books($query) {
 	$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	mysqli_free_result($result);
 	return $items;
+}
+
+function count_basket() {
+	global $basket;
+	$tmp = $basket;
+	unset($tmp['order_id']);
+	$cnt = 0;
+	foreach ($tmp as $item) {
+		$cnt += (int) $item;
+	}
+	return $cnt;
+}
+
+function save_basket() {
+	global $basket;
+
+	$basket = base64_encode(serialize($basket));
+	setcookie('basket', $basket, 0x7FFFFFFF, '/');
+}
+
+function basket_init() {
+	global $basket, $count;
+
+	if (!isset($_COOKIE['basket'])) {
+		$basket = ['order_id' => uniqid()];
+		save_basket();
+	} else {
+		$basket = unserialize(base64_decode($_COOKIE['basket']));
+		$count = count_basket();
+	}
+}
+
+function add_to_basket($id) {
+	global $basket;
+	if (isset($basket[$id])) {
+		$basket[$id]++;
+	} else {
+		$basket[$id] = 1;
+	}
+
+	save_basket();
+}
+
+function get_basket() {
+	global $link, $basket;
+
+	$goods = array_keys($basket);
+	array_shift($goods);
+	if (!$goods) {
+		return false;
+	}
+
+	$ids = implode(", ", $goods);
+	$sql = "SELECT * FROM catalog WHERE item_id IN ($ids)";
+	if (!$result = mysqli_query($link, $sql)) {
+		return false;
+	}
+
+	$items = convert_res_to_arr($result);
+	mysqli_free_result($result);
+
+	return $items;
+}
+
+function del_basket() {
+	setcookie('basket', NULL, time() - 3600, '/');
+}
+
+function del_item_from_basket($id) {
+	global $basket;
+	unset($basket[$id]);
+	save_basket();
+}
+
+function save_order($dateTime) {
+	global $link, $basket;
+	$goods = get_basket();
+	if (!$goods) {
+		return false;
+	}
+
+	$stmt = mysqli_stmt_init($link);
+	$sql = "INSERT INTO orders (
+										item_id,
+										quantity,
+										order_id,
+										datetime
+									 )
+						VALUES (?, ?, ?, ?)";
+	mysqli_stmt_prepare($stmt, $sql);
+	foreach ($goods as $item) {
+		mysqli_stmt_bind_param($stmt, "iisi", $item['item_id'], $item['quantity'], $basket['order_id'], $dateTime);
+		mysqli_stmt_execute($stmt);
+	}
+	mysqli_stmt_close($stmt);
+	del_basket();
+	return true;
 }
 
 function get_orders() {
@@ -118,6 +242,21 @@ function get_orders() {
 		$all_orders[] = $orderinfo;
 	}
 	return $all_orders;
+}
+
+function create_user($username, $email, $phone, $pwd) {
+	global $link;
+	$username = clear_str($username);
+	$email = clear_str(strtolower($email));
+	$phone = clear_str($phone);
+	$pwd = password_hash($pwd, PASSWORD_BCRYPT);
+
+	$sql = 'INSERT INTO users (username, email, phone, password)
+				VALUES (?, ?, ?, ?)';
+	$stmt = mysqli_prepare($link, $sql);
+	mysqli_stmt_bind_param($stmt, 'ssss', $username, $email, $phone, $pwd);
+	mysqli_stmt_execute($stmt);
+	return mysqli_stmt_insert_id($stmt);
 }
 
 function is_username_exist($username) {
@@ -176,8 +315,8 @@ function get_user_data($login, $password) {
 	$login = clear_str(strtolower($login));
 
 	$sql = 'SELECT *
-			FROM users
-			WHERE email = ? OR phone = ?';
+				FROM users
+				WHERE email = ? OR phone = ?';
 	$stmt = mysqli_prepare($link, $sql);
 	mysqli_stmt_bind_param($stmt, 'ss', $login, $login);
 	mysqli_stmt_execute($stmt);
@@ -198,8 +337,8 @@ function get_user_data($login, $password) {
 function is_user_address_exist($address) {
 	global $link;
 	$sql = "SELECT *
-			FROM addresses
-			WHERE address = '{$address}'";
+				FROM addresses
+				WHERE address = '{$address}'";
 	if (!mysqli_query($link, $sql)) {
 		return true;
 	}
@@ -240,4 +379,19 @@ function get_item($item_id) {
 	$result = mysqli_query($link, $sql);
 	$item = mysqli_fetch_assoc($result);
 	return $item;
+}
+
+function update_item($item_id, $title, $author, $pubyear, $price) {
+	global $link;
+
+	$sql = "UPDATE catalog
+			SET title = '" . $title . "',
+				author = '" . $author . "',
+				pubyear = '" . $pubyear . "',
+				price = '" . $price . "'
+			WHERE item_id = '" . $item_id . "'";
+	if (!mysqli_query($link, $sql))
+		return false;
+	else
+		return true;
 }

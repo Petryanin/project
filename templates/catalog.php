@@ -1,5 +1,8 @@
 <?php
-require 'inc/lib.inc.php';
+if (is_file('../functions.php'))
+	require '../functions.php';
+else
+require 'functions.php';
 
 if ($_GET['id'] == 'eshop')
     require_once 'inc/eshop-config.inc.php';

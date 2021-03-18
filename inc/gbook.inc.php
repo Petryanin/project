@@ -66,7 +66,7 @@
 </style>
 
 <?php
-require_once 'lib.inc.php';
+require_once 'functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	save_comment_to_db();

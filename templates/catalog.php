@@ -1,6 +1,8 @@
 <?php
-require_once 'lib.inc.php';
-require_once 'eshop-config.inc.php';
+require 'inc/lib.inc.php';
+
+if ($_GET['id'] == 'eshop')
+    require_once 'inc/eshop-config.inc.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' and !empty($_GET['search'])) {
 	$result = 'search_books';
@@ -21,8 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' and !empty($_GET['search'])) {
 	</button>
 </form>
 
+<?php
+if (isset($count)):
+?>
 <p>Товаров в <a href="index.php?id=basket" class="text-decoration-none">корзине</a>: <?= $count ?></p>
 <?php
+endif;
 $goods = $result($query);
 if ($result == 'search_books') :
 ?>
@@ -46,7 +52,19 @@ endif;
 
 	<?php
 	foreach ($goods as $item) :
-		$image_path = 'eshop/images/' . $item['item_id'] . '.jpg';
+
+		if (isset($basket)) {
+			$item_link = "inc/add-to-basket.inc.php?id={$item['item_id']}";
+			$item_action = 'В корзину';
+		} else {
+			$item_link = "index.php?id=edit-item&item={$item['item_id']}";
+			$item_action = 'Редактировать';
+		}
+
+		if ($_GET['id'] == 'eshop')
+			$image_path = 'eshop/images/' . $item['item_id'] . '.jpg';
+		else
+			$image_path = '../eshop/images/' . $item['item_id'] . '.jpg';
 		if (!is_file($image_path))
 			$image = 'Изображение отсутствует';
 		else
@@ -58,7 +76,7 @@ endif;
 			<td valign="middle"><?= $item['author'] ?></td>
 			<td valign="middle"><?= $item['pubyear'] ?></td>
 			<td valign="middle"><?= $item['price'] ?></td>
-			<th valign="middle"><a class="btn btn-outline-primary p-2" href="inc/add-to-basket.inc.php?id=<?= $item['item_id'] ?>" role="button">В корзину</a></th>
+			<th valign="middle"><a class="btn btn-outline-primary p-2" href="<?= $item_link ?>" role="button"><?= $item_action ?></a></th>
 		</tr>
 	<?php
 	endforeach;

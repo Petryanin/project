@@ -16,7 +16,7 @@ include 'inc/headers.inc.php';
 <body class="d-flex flex-column h-100">
 
 	<header>
-		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="background-color: #e3f2fd;">
+		<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
 			<div class="container-fluid">
 				<span class="navbar-brand">PROJECT ONE</span>
 				<div class="collapse navbar-collapse" id="navbarCollapse">
@@ -85,6 +85,13 @@ include 'inc/headers.inc.php';
 	<footer class="footer mt-auto py-2 bg-light ">
 		<div class="container d-flex justify-content-between">
 			<span class="btn text-muted">Веб-приложение Алексея Петрянина</span>
+			<?php
+			if (isset($_SESSION['user']) and $_SESSION['user']['admin'] === 1) :
+			?>
+				<a href="admin/index.php" class="btn btn-outline-secondary">Администрирование</a>
+			<?php
+			endif;
+			?>
 		</div>
 	</footer>
 

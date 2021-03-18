@@ -13,7 +13,7 @@ switch ($id) {
 		include 'inc/gbook.inc.php';
 		break;
 	case 'eshop':
-		include 'inc/eshop.inc.php';
+		include 'templates/catalog.php';
 		break;
 	case 'basket':
 		include 'inc/basket.inc.php';

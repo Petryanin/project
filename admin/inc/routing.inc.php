@@ -9,4 +9,7 @@ switch ($id) {
     case 'edit-item':
         include 'inc/edit-item.inc.php';
         break;
+    case 'add-item':
+        include 'inc/add-item.inc.php';
+        break;
 }

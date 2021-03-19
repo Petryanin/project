@@ -36,6 +36,11 @@ require_once 'inc/titles.inc.php';
 								Каталог
 							</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link <?= isset($_GET['id']) && $_GET['id'] == 'add-item' ? 'active' : '' ?>" aria-current="page" href="index.php?id=add-item">
+								Добавить товар
+							</a>
+						</li>
 					</ul>
 					<a class="btn btn-outline-light" href="../index.php">Выйти из режима администрирования</a>
 				</div>

@@ -11,26 +11,18 @@ $item = get_item($item_id);
 </h3>
 
 <?php
-if (isset($_SESSION['msg'])):
+include 'inc/alert.inc.php';
 ?>
-    <div class="alert alert-warning" role="alert">
-        <?= $_SESSION['msg'] ?>
-    </div>
 
-<?php
-    unset($_SESSION['msg']);
-endif;
-?>
 <form enctype="multipart/form-data" action="inc/save-changes.inc.php" method="post">
     
     <input type="hidden" name="item_id" value="<?= $item['item_id'] ?>" />
 
-    Обложка:</br>
-    <img src="../eshop/images/<?= $item['item_id'] ?>.jpg" class="mb-2" style="width: 100px"></br>
+    <span>Обложка:</span></br>
+    <img src="../eshop/images/<?= $item['item_id'] ?>.jpg" class="mb-3" style="width: 100px"></br>
 
     <span>Загрузить новую:</span>
-    <input type="hidden" name="MAX_FILE_SIZE" value="2000" />
-    <input class="mb-3" type="file" name="<?= $item['item_id'] ?>.jpg"></br>
+    <input class="form-control" type="file" name="userfile"></br>
     
     <span>Название:</span>
     <input class="form-control mb-3" type="text" name="title" value="<?= $item['title'] ?>">

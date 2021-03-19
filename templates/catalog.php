@@ -7,7 +7,7 @@ require 'functions.php';
 if ($_GET['id'] == 'eshop')
     require_once 'inc/eshop-config.inc.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'GET' and !empty($_GET['search'])) {
+if (!empty($_GET['search'])) {
 	$result = 'search_books';
 	$query = $_GET['search'];
 } else {
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' and !empty($_GET['search'])) {
 ?>
 
 <form class="input-group" method="GET">
-	<input type="hidden" name="id" value="eshop">
+	<input type="hidden" name="id" value="<?= $_GET['id'] ?>">
 	<input type="text" maxlength="50" style="padding-right: 54px" class="form-control find rounded shadow-none mt-3 mb-3" placeholder="Поиск (название, автор, год издания)" name="search" value="<?= $query ?>" />
 	<button class="btn btn-primary input-group-text rounded-right position-absolute mt-3 mb-3" style="z-index: 100; right: 0; height: 38px" type="submit">
 		<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

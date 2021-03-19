@@ -63,23 +63,23 @@ function convert_res_to_arr($data) {
 	return $arr;
 }
 
-function add_item_to_cat($title, $author, $pubyear, $price, $image) {
-	$sql = "INSERT INTO catalog (title, author, pubyear, price, image)
-				VALUES (?, ?, ?, ?, ?)";
+function add_item_to_cat($title, $author, $pubyear, $price) {
+	$sql = "INSERT INTO catalog (title, author, pubyear, price)
+				VALUES (?, ?, ?, ?)";
 	global $link;
 
 	if (!$stmt = mysqli_prepare($link, $sql)) {
 		return false;
 	}
 
-	mysqli_stmt_bind_param($stmt, "ssiis", $title, $author, $pubyear, $price, $image);
+	mysqli_stmt_bind_param($stmt, "ssii", $title, $author, $pubyear, $price);
 	mysqli_stmt_execute($stmt);
 	mysqli_stmt_close($stmt);
 	return true;
 }
 
 function select_all_items() {
-	$sql = 'SELECT * FROM catalog';
+	$sql = 'SELECT * FROM catalog ORDER BY title';
 	global $link;
 
 	if (!$result = mysqli_query($link, $sql)) {
@@ -95,9 +95,10 @@ function search_books($query) {
 	global $link;
 	$query = clear_str($query);
 	$sql = "SELECT * FROM catalog
-				  WHERE title REGEXP ?
-				  	OR author REGEXP ?
-					OR pubyear REGEXP ?";
+			WHERE title REGEXP ?
+				OR author REGEXP ?
+				OR pubyear REGEXP ?
+			ORDER BY title";
 
 	$stmt = mysqli_prepare($link, $sql);
 	mysqli_stmt_bind_param($stmt, 'sss', $query, $query, $query);

@@ -29,7 +29,7 @@ CREATE TABLE `addresses` (
   PRIMARY KEY (`addr_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `addresses` (
 
 LOCK TABLES `addresses` WRITE;
 /*!40000 ALTER TABLE `addresses` DISABLE KEYS */;
-INSERT INTO `addresses` VALUES (3,22,'Baker st. 221B, England, UK'),(4,22,'Уральская 3, Калининград, Россия'),(7,22,'Иванихиной 16, Калининград, Россия'),(9,14,'252 Rogahn Pike East Trevion, SD 28614'),(13,23,'67232 Cruz Mount Apt. 900 South Rossstad');
+INSERT INTO `addresses` VALUES (3,22,'Baker st. 221B, England, UK'),(4,22,'Уральская 3, Калининград, Россия'),(7,22,'Иванихиной 16, Калининград, Россия'),(9,14,'252 Rogahn Pike East Trevion, SD 28614'),(13,23,'67232 Cruz Mount Apt. 900 South Rossstad'),(14,8,'г. Калининград ул. Кирова 28');
 /*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +56,7 @@ CREATE TABLE `catalog` (
   `pubyear` int DEFAULT NULL,
   `price` int DEFAULT NULL,
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -65,7 +65,7 @@ CREATE TABLE `catalog` (
 
 LOCK TABLES `catalog` WRITE;
 /*!40000 ALTER TABLE `catalog` DISABLE KEYS */;
-INSERT INTO `catalog` VALUES (6,'Тихий Дон','Михаил Шолохов',2016,490),(7,'Гарри Поттер и Узник Азкабана','Дж.К. Роулинг',2010,550),(8,'Война и мир','Л.Н. Толстой',2015,340),(9,'Преступление и наказание','Фёдор Достоевский',2016,480),(10,'Гордость и предубеждение','Джейн Остен',2014,390),(11,'Отцы и дети','И.С. Тургенев',2015,280),(12,'Хоббит или туда и обратно','Дж.Р.Р. Толкин',2011,890);
+INSERT INTO `catalog` VALUES (6,'Тихий Дон','Михаил Шолохов',2016,490),(7,'Гарри Поттер и Узник Азкабана','Дж.К. Роулинг',2010,550),(8,'Война и мир','Л.Н. Толстой',2015,340),(9,'Преступление и наказание','Фёдор Достоевский',2016,480),(10,'Гордость и предубеждение','Джейн Остен',2014,390),(11,'Отцы и дети','И.С. Тургенев',2015,280),(12,'Хоббит или туда и обратно','Дж.Р.Р. Толкин',2011,890),(13,'451 градус по Фаренгейту','Рэй Брэдбери',1953,280),(14,'Автостопом по Галактике','Дуглас Адамс',1979,660);
 /*!40000 ALTER TABLE `catalog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +113,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `item_id` (`item_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `catalog` (`item_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,6 +122,7 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (100,6,1,'6050b290b44e3',1616124550),(101,7,1,'6050b290b44e3',1616124550),(102,9,1,'60541a8c038f0',1616128435),(103,13,2,'60541a8c038f0',1616128435),(104,14,1,'60541a8c038f0',1616128435),(105,8,1,'605429b920943',1616128517),(106,10,1,'605429b920943',1616128517),(107,11,1,'605429b920943',1616128517),(108,12,1,'605429b920943',1616128517);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,6 +139,7 @@ CREATE TABLE `users` (
   `email` varchar(50) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `password` varchar(100) NOT NULL,
+  `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -148,7 +150,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'alex','alex@alex.ru','8931729846127','$2y$10$aDDZq1aTakQjdzlIcrmw9.AniS3RANeHE1/o2AR5r0xVPly/om6RO'),(2,'mike','mike@mike.com','123986187246','$2y$10$iztyjvsmcugaq7P0UN4xsOXLl6RZXjxc/vkAAhc8C9Gn1ZXSKoSbm'),(3,'Nick','nick@nick.ru','8127398123098','$2y$10$Ksna0xmELe0DBWgE7lb5seTFIwI7StMBwl/j5fb1Qzq89/v4kCPk.'),(4,'George','GeOrge@gER.som','235243642','$2y$10$JV6cdV1D5lk7FONViRe9YuQTXKAjAR3Is919cdvWpb7QJTvvsfHbC'),(5,'Bob','bob@bob.bob','1231425','$2y$10$Axt63IiMP8rx/Qs8KYh98ehqZYRzcedMnc1OBKlRdyb3Z1.SdVWve'),(7,'ron','ron@ron.ron','12434124123','$2y$10$FQVnj4PTT03SoKi7YJEbeuYy8JklCyu97FrfMQhLQbvkaG/ZlHmnG'),(8,'Tom','tom@tom.tom','12345','$2y$10$oSUsVnkfBCn4eL5qi/t2Ie5deiJCuppjy7HiMiJ2K.xb4Rx8FrnBi'),(11,'Carl','carl@carl.carl','24141415','$2y$10$xShPrb2W0nIrG1AtXXuVC.hr9fRzwtdseKjoAXtuywoYS57Na5ODm'),(12,'jack','jack@jack.org','142142141512','$2y$10$ID2Mvd3PYXYM.7LvTO2KveCvkoslPdFncpXkybbKTFDGdgN7oI7Ea'),(13,'Roman','rom@rom.rom','314693847','$2y$10$q/VGTouQFNOY4cy.YEq6T.09BW/mLDAPuEQJDsH0t4BNB3AGVFogq'),(14,'james','james@james.james','4235234','$2y$10$/BGTiU7V/OG29hMWGvS16.UhpYpwbZJU7hfdObzXB3kmTSUIvNHVe'),(15,'Dora','dora@dura.dr','18347623597','$2y$10$1P31.s0IlF5FB7Npg7UeVOILGYyMF4QxIeJysEPpc02drBsZg.9zW'),(17,'John Doe','john@doe.net','12345678','$2y$10$pYRu9oozzkHaI4vOaJtiZeo/cVc3YNLIto1sG2yhfdWvUDF2kqzC.'),(22,'sherlock_holmes','sher@lock.holmes','1234567890','$2y$10$p/5DR63tKJAc2uAgbcLVg.//QH8F/LQ2TPwAjS1oQR9.63Sipfjs6'),(23,'John Frusciante','frusciante@rhcp.world','11111111111111','$2y$10$xiJegU8B2QvqBY.ib23M2OwgZ/yP7zg4iH61IDxyxXSHN.i.D1HSq');
+INSERT INTO `users` VALUES (1,'alex','alex@alex.ru','8931729846127','$2y$10$aDDZq1aTakQjdzlIcrmw9.AniS3RANeHE1/o2AR5r0xVPly/om6RO',NULL),(2,'mike','mike@mike.com','123986187246','$2y$10$iztyjvsmcugaq7P0UN4xsOXLl6RZXjxc/vkAAhc8C9Gn1ZXSKoSbm',NULL),(3,'Nick','nick@nick.ru','8127398123098','$2y$10$Ksna0xmELe0DBWgE7lb5seTFIwI7StMBwl/j5fb1Qzq89/v4kCPk.',NULL),(4,'George','GeOrge@gER.som','235243642','$2y$10$JV6cdV1D5lk7FONViRe9YuQTXKAjAR3Is919cdvWpb7QJTvvsfHbC',NULL),(5,'Bob','bob@bob.bob','1231425','$2y$10$Axt63IiMP8rx/Qs8KYh98ehqZYRzcedMnc1OBKlRdyb3Z1.SdVWve',NULL),(7,'ron','ron@ron.ron','12434124123','$2y$10$FQVnj4PTT03SoKi7YJEbeuYy8JklCyu97FrfMQhLQbvkaG/ZlHmnG',NULL),(8,'Tom','tom@tom.tom','12345','$2y$10$oSUsVnkfBCn4eL5qi/t2Ie5deiJCuppjy7HiMiJ2K.xb4Rx8FrnBi',NULL),(11,'Carl','carl@carl.carl','24141415','$2y$10$xShPrb2W0nIrG1AtXXuVC.hr9fRzwtdseKjoAXtuywoYS57Na5ODm',NULL),(12,'jack','jack@jack.org','142142141512','$2y$10$ID2Mvd3PYXYM.7LvTO2KveCvkoslPdFncpXkybbKTFDGdgN7oI7Ea',NULL),(13,'Roman','rom@rom.rom','314693847','$2y$10$q/VGTouQFNOY4cy.YEq6T.09BW/mLDAPuEQJDsH0t4BNB3AGVFogq',NULL),(14,'james','james@james.james','4235234','$2y$10$/BGTiU7V/OG29hMWGvS16.UhpYpwbZJU7hfdObzXB3kmTSUIvNHVe',NULL),(15,'Dora','dora@dura.dr','18347623597','$2y$10$1P31.s0IlF5FB7Npg7UeVOILGYyMF4QxIeJysEPpc02drBsZg.9zW',NULL),(17,'John Doe','john@doe.net','12345678','$2y$10$pYRu9oozzkHaI4vOaJtiZeo/cVc3YNLIto1sG2yhfdWvUDF2kqzC.',NULL),(22,'sherlock_holmes','sher@lock.holmes','1234567890','$2y$10$p/5DR63tKJAc2uAgbcLVg.//QH8F/LQ2TPwAjS1oQR9.63Sipfjs6',1),(23,'John Frusciante','frusciante@rhcp.world','11111111111111','$2y$10$xiJegU8B2QvqBY.ib23M2OwgZ/yP7zg4iH61IDxyxXSHN.i.D1HSq',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +163,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-17  1:23:45
+-- Dump completed on 2021-03-19 16:58:41

@@ -219,19 +219,21 @@ function get_orders() {
 	$all_orders = [];
 
 	foreach ($orders as $order) {
-		list($name, $email, $phone, $address, $orderid, $date) = explode("|", $order);
+		list($name, $email, $phone, $address, $order_id, $date) = explode("|", $order);
 
 		$orderinfo = [];
-		$orderinfo['name'] = $name;
-		$orderinfo['email'] = $email;
-		$orderinfo['phone'] = $phone;
-		$orderinfo['address'] = $address;
-		$orderinfo['orderid'] = $orderid;
-		$orderinfo['date'] = $date;
+		$orderinfo['name']     = $name;
+		$orderinfo['email']    = $email;
+		$orderinfo['phone']    = $phone;
+		$orderinfo['address']  = $address;
+		$orderinfo['order_id'] = $order_id;
+		$orderinfo['date']     = $date;
 
 		$sql = "SELECT title, author, pubyear, price, quantity
-						FROM orders
-						WHERE orderid = '$orderid' AND datetime = '$date'";
+				FROM orders o
+				JOIN catalog c ON o.item_id = c.item_id
+				WHERE order_id = '$order_id' AND datetime = '$date'";
+
 		if (!$result = mysqli_query($link, $sql)) {
 			return false;
 		}

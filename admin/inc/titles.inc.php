@@ -17,4 +17,7 @@ switch ($id) {
     case 'add-item':
         $title = 'Добавить товар';
         break;
+    case 'orders':
+        $title = 'Заказы';
+        break;
 }    

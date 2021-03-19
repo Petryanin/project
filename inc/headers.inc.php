@@ -24,7 +24,10 @@ switch ($id) {
 	case 'basket':
 		$title = 'Корзина';
 		break;
-	case 'orderform' || 'saveorder':
+	case 'orderform':
+		$title = 'Оформление заказа';
+		break;
+	case 'saveorder':
 		$title = 'Оформление заказа';
 		break;
 	default:

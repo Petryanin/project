@@ -12,4 +12,7 @@ switch ($id) {
     case 'add-item':
         include 'inc/add-item.inc.php';
         break;
+    case 'orders':
+        include 'inc/orders.inc.php';
+        break;
 }

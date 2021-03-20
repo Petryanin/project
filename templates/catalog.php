@@ -2,10 +2,10 @@
 if (is_file('../functions.php'))
 	require '../functions.php';
 else
-require 'functions.php';
+	require 'functions.php';
 
 if ($_GET['id'] == 'eshop')
-    require_once 'inc/eshop-config.inc.php';
+	require_once 'inc/eshop-config.inc.php';
 
 if (!empty($_GET['search'])) {
 	$result = 'search_books';
@@ -27,12 +27,21 @@ if (!empty($_GET['search'])) {
 </form>
 
 <?php
-if (isset($count)):
+if (isset($count)) :
 ?>
-<p>Товаров в <a href="index.php?id=basket" class="text-decoration-none">корзине</a>: <?= $count ?></p>
+	<p>Товаров в <a href="index.php?id=basket" class="text-decoration-none">корзине</a>: <?= $count ?></p>
 <?php
 endif;
+
 $goods = $result($query);
+if (!$goods) :
+?>
+	<h4 class="mt-3">Упс...</h4>
+	<h4 class="mt-3">Что-то пошло не так, обратитесь к администратору</h4>
+<?php
+	exit;
+endif;
+
 if ($result == 'search_books') :
 ?>
 	<p>Результатов поиска: <?= count($goods) ?></p>

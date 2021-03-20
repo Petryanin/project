@@ -47,6 +47,9 @@ function output_comments() {
 	$result = mysqli_query($link, $sql);
 	mysqli_close($link);
 
+	if (!$result)
+		return false;
+
 	$arr = mysqli_fetch_all($result, MYSQLI_ASSOC);
 	return $arr;
 }
@@ -269,7 +272,11 @@ function is_username_exist($username) {
 	$sql = 'SELECT username
 				FROM users
 				WHERE username = ?';
+
 	$stmt = mysqli_prepare($link, $sql);
+	if (!$stmt)
+		return null;
+
 	mysqli_stmt_bind_param($stmt, 's', $username);
 	mysqli_stmt_execute($stmt);
 	if (!mysqli_stmt_fetch($stmt)) {
@@ -320,7 +327,11 @@ function get_user_data($login, $password) {
 	$sql = 'SELECT *
 				FROM users
 				WHERE email = ? OR phone = ?';
+
 	$stmt = mysqli_prepare($link, $sql);
+	if (!$stmt)
+		return null;
+
 	mysqli_stmt_bind_param($stmt, 'ss', $login, $login);
 	mysqli_stmt_execute($stmt);
 

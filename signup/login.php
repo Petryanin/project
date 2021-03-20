@@ -7,7 +7,7 @@ if (!isset($_SESSION['ref']))
 if (basename($_SERVER['HTTP_REFERER']) == 'register.php' and isset($_SESSION['userdata']))
     unset($_SESSION['userdata']);
 
-if (isset($_SESSION['userdata']))
+if (isset($_SESSION['userdata']) and !is_array($_SESSION['userdata']))
     $login = $_SESSION['userdata'];
 else $login = '';
 

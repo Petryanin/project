@@ -12,7 +12,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }
-    if (!$_SESSION['user'] = get_user_data($login, $pwd)) {
+
+    $_SESSION['user'] = get_user_data($login, $pwd);
+
+    if ($_SESSION['user'] === null) {
+        $_SESSION['error'] = 'ошибка подключения к базе данных';
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+    if (!$_SESSION['user']) {
         $_SESSION['error'] = 'неверно введен логин или пароль';
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;

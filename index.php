@@ -74,7 +74,7 @@ include 'inc/headers.inc.php';
 		</nav>
 	</header>
 
-	<main class="flex-shrink-0 mt-3">
+	<main class="flex-shrink-0" style="margin-top: 80px">
 		<div class="container">
 			<?php
 			require 'inc/routing.inc.php';

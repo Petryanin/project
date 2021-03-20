@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../functions.php';
+require '../../functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$username    = $_POST['username'];
@@ -22,7 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
 		exit;
 	}
-	if (is_username_exist($username)) {
+
+	$user_err = is_username_exist($username);
+
+	if ($user_err === null) {
+		$_SESSION['error'] = 'ошибка подключения к базе данных';
+		header('Location: ' . $_SERVER['HTTP_REFERER']);
+		exit;
+	}
+	if (!$user_err) {
 		$_SESSION['error'] = 'пользователь с таким именем уже существует';
 		header('Location: ' . $_SERVER['HTTP_REFERER']);
 		exit;

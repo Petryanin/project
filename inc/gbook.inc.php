@@ -92,6 +92,14 @@ else :
 endif;
 
 $output = output_comments();
+if (!$output) :
+?>
+	<h4 class="mt-3">Упс...</h4>
+	<h4 class="mt-3">Что-то пошло не так, обратитесь к администратору</h4>
+<?php
+	exit;
+endif;
+
 $cnt = array_key_last($output) + 1;
 ?>
 <p class="mt-5">Всего сообщений: <?= $cnt ?></p>

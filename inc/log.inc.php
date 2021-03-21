@@ -6,5 +6,6 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 	$ref  = pathinfo($_SERVER['HTTP_REFERER'], PATHINFO_BASENAME);
 	$path = $dt . "|" . $ref . "|" . $page . "\n";
 
-	file_put_contents(PATH_LOG, $path, FILE_APPEND);
+	if (is_dir('log'))
+		file_put_contents(PATH_LOG, $path, FILE_APPEND);
 }

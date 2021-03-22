@@ -1,6 +1,4 @@
 <?php
-require 'functions.php';
-
 if (isset($_SESSION['error'])) :
 ?>
 

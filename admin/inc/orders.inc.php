@@ -1,6 +1,4 @@
 <?php
-require '../functions.php';
-
 if (!$orders = get_orders()) :
 ?>
     <h3 class="mt-3">Тут ничего нет...</h3>

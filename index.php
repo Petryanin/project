@@ -1,8 +1,13 @@
 <?php
 session_start();
 define('PATH_LOG', 'log/path.log');
-include 'inc/log.inc.php';
-include 'inc/headers.inc.php';
+
+require_once 'functions.php';
+require_once 'inc/eshop-config.inc.php';
+require_once 'inc/log.inc.php';
+require_once 'inc/headers.inc.php';
+
+ob_start();
 ?>
 <!doctype html>
 <html lang="en" class="h-100">
@@ -98,3 +103,6 @@ include 'inc/headers.inc.php';
 </body>
 
 </html>
+
+<?php
+ob_end_flush();

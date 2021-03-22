@@ -66,8 +66,6 @@
 </style>
 
 <?php
-require_once 'functions.php';
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	save_comment_to_db();
 if (isset($_GET['del']))

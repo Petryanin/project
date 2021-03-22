@@ -1,6 +1,6 @@
 <?php
 session_start();
-require '../../functions.php';
+require_once '../../functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $title   = clear_str($_POST['title']); 

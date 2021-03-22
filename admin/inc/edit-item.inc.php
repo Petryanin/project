@@ -1,6 +1,4 @@
 <?php
-require '../functions.php';
-
 if (isset($_GET['item']))
     $item_id = clear_str($_GET['item']);
 $item = get_item($item_id);

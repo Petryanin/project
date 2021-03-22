@@ -1,8 +1,3 @@
-<?php
-require_once 'functions.php';
-require_once 'eshop-config.inc.php';
-?>
-
 <h1 class="mt-5 mb-3">Ваша корзина</h1>
 
 <?php

@@ -65,7 +65,7 @@ CREATE TABLE `catalog` (
 
 LOCK TABLES `catalog` WRITE;
 /*!40000 ALTER TABLE `catalog` DISABLE KEYS */;
-INSERT INTO `catalog` VALUES (6,'Тихий Дон','Михаил Шолохов',2016,490),(7,'Гарри Поттер и Узник Азкабана','Дж.К. Роулинг',2010,550),(8,'Война и мир','Л.Н. Толстой',2015,340),(9,'Преступление и наказание','Фёдор Достоевский',2016,480),(10,'Гордость и предубеждение','Джейн Остен',2014,390),(11,'Отцы и дети','И.С. Тургенев',2015,280),(12,'Хоббит или туда и обратно','Дж.Р.Р. Толкин',2011,890),(13,'451 градус по Фаренгейту','Рэй Брэдбери',1953,280),(14,'Автостопом по Галактике','Дуглас Адамс',1979,660);
+INSERT INTO `catalog` VALUES (6,'Тихий Дон','Михаил Шолохов',2016,490),(7,'Гарри Поттер и Узник Азкабана','Дж.К. Роулинг',2010,550),(8,'Война и мир','Л.Н. Толстой',2015,340),(9,'Преступление и наказание','Фёдор Достоевский',2016,480),(10,'Гордость и предубеждение','Джейн Остен',2014,390),(11,'Отцы и дети','И.С. Тургенев',2015,280),(12,'Хоббит или туда и обратно','Дж.Р.Р. Толкин',2011,300),(13,'451 градус по Фаренгейту','Рэй Брэдбери',1953,280),(14,'Автостопом по Галактике','Дуглас Адамс',1979,660);
 /*!40000 ALTER TABLE `catalog` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +113,7 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   KEY `item_id` (`item_id`),
   CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `catalog` (`item_id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=117 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,7 +122,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (100,6,1,'6050b290b44e3',1616124550),(101,7,1,'6050b290b44e3',1616124550),(102,9,1,'60541a8c038f0',1616128435),(103,13,2,'60541a8c038f0',1616128435),(104,14,1,'60541a8c038f0',1616128435),(105,8,1,'605429b920943',1616128517),(106,10,1,'605429b920943',1616128517),(107,11,1,'605429b920943',1616128517),(108,12,1,'605429b920943',1616128517);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,4 +162,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-19 16:58:41
+-- Dump completed on 2021-03-23 21:53:43

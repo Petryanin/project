@@ -1,5 +1,5 @@
 <?php
-require_once 'db.inc.php';
+require_once 'db.php';
 
 function clear_str($data) {
 	return trim(strip_tags($data));

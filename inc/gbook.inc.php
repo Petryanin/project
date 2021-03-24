@@ -66,7 +66,7 @@
 </style>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if ($_SERVER['REQUEST_METHOD'] == 'POST' and !empty($_POST['msg']))
 	save_comment_to_db();
 if (isset($_GET['del']))
 	del_comment_from_db();

@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
     web:
         image: nginx:latest
@@ -16,12 +16,10 @@ services:
     mysql:
         image: mysql:latest
         volumes:
-            - mysqldata:/var/lib/mysql
             - ./:/docker-entrypoint-initdb.d
         environment:
-            MYSQL_ROOT_PASSWORD: 'secret'
-            MYSQL_DATABASE: 'project'
+            MYSQL_ROOT_PASSWORD: "secret"
+            MYSQL_DATABASE: "project"
+            MYSQL_ROOT_HOST: "%"
         ports:
             - 3306:3306
-volumes:
-    mysqldata: {}

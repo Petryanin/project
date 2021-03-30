@@ -86,7 +86,7 @@ function select_all_items() {
 	global $link;
 
 	if (!$result = mysqli_query($link, $sql)) {
-		return false;
+		return null;
 	}
 
 	$items = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -106,7 +106,7 @@ function search_books($query) {
 	$stmt = mysqli_prepare($link, $sql);
 	mysqli_stmt_bind_param($stmt, 'sss', $query, $query, $query);
 	if (!mysqli_stmt_execute($stmt)) {
-		return false;
+		return null;
 	}
 
 	$result = mysqli_stmt_get_result($stmt);

@@ -26,7 +26,7 @@ if (isset($count)) :
 endif;
 
 $goods = $result($query);
-if (!$goods) :
+if ($goods === null) :
 ?>
 	<h4 class="mt-3">Упс...</h4>
 	<h4 class="mt-3">Что-то пошло не так, обратитесь к администратору</h4>
@@ -34,56 +34,63 @@ if (!$goods) :
 	exit;
 endif;
 
+$count_books = count($goods);
+
 if ($result == 'search_books') :
 ?>
-	<p>Результатов поиска: <?= count($goods) ?></p>
+	<p>Результатов поиска: <?= $count_books ?></p>
 <?php
 endif;
+
+if ($count_books) :
 ?>
 
-<table class="table">
+	<table class="table">
 
-	<thead>
-		<tr>
-			<th style="width: 15%">Обложка</th>
-			<th>Название</th>
-			<th>Автор</th>
-			<th>Год издания</th>
-			<th>Цена, руб.</th>
-			<th></th>
-		</tr>
-	</thead>
+		<thead>
+			<tr>
+				<th style="width: 15%">Обложка</th>
+				<th>Название</th>
+				<th>Автор</th>
+				<th>Год издания</th>
+				<th>Цена, руб.</th>
+				<th></th>
+			</tr>
+		</thead>
 
-	<?php
-	foreach ($goods as $item) :
+		<?php
+		foreach ($goods as $item) :
 
-		if (isset($basket)) {
-			$item_link = "inc/add-to-basket.inc.php?id={$item['item_id']}";
-			$item_action = 'В корзину';
-		} else {
-			$item_link = "index.php?id=edit-item&item={$item['item_id']}";
-			$item_action = 'Редактировать';
-		}
+			if (isset($basket)) {
+				$item_link = "inc/add-to-basket.inc.php?id={$item['item_id']}";
+				$item_action = 'В корзину';
+			} else {
+				$item_link = "index.php?id=edit-item&item={$item['item_id']}";
+				$item_action = 'Редактировать';
+			}
 
-		if ($_GET['id'] == 'eshop')
-			$image_path = 'eshop/images/' . $item['item_id'] . '.jpg';
-		else
-			$image_path = '../eshop/images/' . $item['item_id'] . '.jpg';
-		if (!is_file($image_path))
-			$image = 'Изображение отсутствует';
-		else
-			$image = "<img style='width: 60%' src='{$image_path}'>";
-	?>
-		<tr>
-			<td><?= $image ?></td>
-			<td valign="middle"><?= $item['title'] ?></td>
-			<td valign="middle"><?= $item['author'] ?></td>
-			<td valign="middle"><?= $item['pubyear'] ?></td>
-			<td valign="middle"><?= $item['price'] ?></td>
-			<th valign="middle"><a class="btn btn-outline-primary p-2" href="<?= $item_link ?>" role="button"><?= $item_action ?></a></th>
-		</tr>
-	<?php
-	endforeach;
-	?>
+			if ($_GET['id'] == 'eshop')
+				$image_path = 'eshop/images/' . $item['item_id'] . '.jpg';
+			else
+				$image_path = '../eshop/images/' . $item['item_id'] . '.jpg';
+			if (!is_file($image_path))
+				$image = 'Изображение отсутствует';
+			else
+				$image = "<img style='width: 60%' src='{$image_path}'>";
+		?>
+			<tr>
+				<td><?= $image ?></td>
+				<td valign="middle"><?= $item['title'] ?></td>
+				<td valign="middle"><?= $item['author'] ?></td>
+				<td valign="middle"><?= $item['pubyear'] ?></td>
+				<td valign="middle"><?= $item['price'] ?></td>
+				<th valign="middle"><a class="btn btn-outline-primary p-2" href="<?= $item_link ?>" role="button"><?= $item_action ?></a></th>
+			</tr>
+		<?php
+		endforeach;
+		?>
 
-</table>
+	</table>
+
+<?php
+endif;
